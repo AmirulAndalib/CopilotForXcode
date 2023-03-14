@@ -98,14 +98,6 @@ struct SuggestionPanelView: View {
 }
 
 struct CodeBlock: View {
-    struct SizePreferenceKey: PreferenceKey {
-        public static var defaultValue: CGSize = .zero
-        public static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-            value = value.width + value.height > nextValue().width + nextValue()
-                .height ? value : nextValue()
-        }
-    }
-
     @ObservedObject var viewModel: SuggestionPanelViewModel
 
     var body: some View {
@@ -127,9 +119,6 @@ struct CodeBlock: View {
         .foregroundColor(.white)
         .font(.system(size: 12, design: .monospaced))
         .padding()
-        .background(GeometryReader(content: { proxy in
-            Color.clear.preference(key: SizePreferenceKey.self, value: proxy.size)
-        }))
     }
 }
 
